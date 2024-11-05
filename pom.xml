@@ -57,7 +57,6 @@
     <url>https://github.com/alibaba/arthas</url>
 
     <modules>
-        <module>web-ui</module>
         <module>math-game</module>
         <module>common</module>
         <module>spy</module>
@@ -231,6 +230,48 @@
     </dependencyManagement>
 
     <profiles>
+
+        <!-- 这段新增的profile是windows系统通用，即只要是windows系统，都能激活，保证os_name有效 -->
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <os_name>windows</os_name>
+            </properties>
+        </profile>
+        <!-- 这段新增的profile是针对windows x86系统，使在该系统下时os_arch_option和lib_name有效-->
+        <profile>
+            <id>windows-32</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                    <arch>x86</arch>
+                </os>
+            </activation>
+            <properties>
+                <os_arch_option>-m32</os_arch_option>
+                <lib_name>libArthasJniLibrary-x64.dll</lib_name>
+            </properties>
+        </profile>
+        <!-- 这段是原本的profile，针对windows amd64系统的，做了点修改：将os_name提取到上面windows通用的profile中-->
+        <profile>
+            <id>windows-amd64</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <os_arch_option>-m64</os_arch_option>
+                <lib_name>libArthasJniLibrary-x64.dll</lib_name>
+            </properties>
+        </profile>
+
         <profile>
             <!-- ci test -->
             <id>jdk12</id>
@@ -250,6 +291,7 @@
                 </dependency>
             </dependencies>
         </profile>
+
 
         <profile>
             <id>full</id>

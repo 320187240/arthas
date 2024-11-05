@@ -44,7 +44,10 @@ English version goes [here](README.md).
 curl -O https://arthas.aliyun.com/arthas-boot.jar
 java -jar arthas-boot.jar
 ```
-
+    
+打包
+    mvn -DskipTests clean package
+    
 打印帮助信息：
 
 ```bash
